@@ -1,3 +1,5 @@
+// pages/HomePage.js
+
 class HomePage {
   static primaryHeaderText = '.app_logo';
   static shoppingCart = '.shopping_cart_link';
@@ -12,6 +14,11 @@ class HomePage {
   static menuWrap = '.bm-menu-wrap';
   static menuOptions = '.bm-item-list .bm-item';
   static closeButton = '#react-burger-cross-btn';
+
+  static filterContainer = 'select.product_sort_container';
+  static filterOptions = 'select.product_sort_container option';
+  static inventoryItemName = 'div.inventory_item_name';
+  static inventoryItemPrice = 'div.inventory_item_price';
 
   static async getHeaderText(page) {
     return await page.textContent(this.primaryHeaderText);
@@ -105,6 +112,52 @@ class HomePage {
       console.log('Error checking menu visibility:', error.message);
       return false;
     }
+  }
+
+  // New filter container methods
+
+  static async isFilterContainerVisible(page) {
+    return await page.isVisible(this.filterContainer);
+  }
+
+  static async getFilterOptions(page) {
+    const options = await page.$$(this.filterOptions);
+    const optionTexts = [];
+    for (const option of options) {
+      const text = await option.textContent();
+      if (text && text.trim()) {
+        optionTexts.push(text.trim());
+      }
+    }
+    return optionTexts;
+  }
+
+  static async selectFilterOption(page, optionText) {
+    await page.selectOption(this.filterContainer, { label: optionText });
+    // Wait a little to allow sorting to apply
+    await page.waitForTimeout(500);
+  }
+
+  static async getInventoryItemNames(page) {
+    const elements = await page.$$(this.inventoryItemName);
+    const names = [];
+    for (const el of elements) {
+      const text = await el.textContent();
+      if (text && text.trim()) {
+        names.push(text.trim());
+      }
+    }
+    return names;
+  }
+
+  static async getInventoryItemPrices(page) {
+    const elements = await page.$$(this.inventoryItemPrice);
+    const prices = [];
+    for (const el of elements) {
+      const text = (await el.textContent()).trim();
+      prices.push(parseFloat(text.replace('$', '')));
+    }
+    return prices;
   }
 }
 
