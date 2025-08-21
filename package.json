@@ -1,0 +1,27 @@
+{
+  "name": "cucumber-playwright-pom",
+  "version": "1.0.0",
+  "description": "Cucumber + Playwright + POM setup",
+  "main": "index.js",
+  "scripts": {
+    "test": "cucumber-js --require step-definitions/**/*.js --require support/**/*.js features/**/*.feature",
+    "test:debug": "cucumber-js --require-module ts-node/register --require step-definitions/**/*.ts --require support/**/*.ts features/**/*.feature --format progress-bar",
+    "playwright:install": "playwright install"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@cucumber/cucumber": "^12.1.0",
+    "@playwright/test": "^1.55.0",
+    "chai": "^5.3.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.3",
+    "@babel/register": "^7.28.3",
+    "@cucumber/pretty-formatter": "^2.1.0",
+    "@types/node": "^24.3.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}
