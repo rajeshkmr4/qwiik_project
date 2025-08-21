@@ -1,5 +1,3 @@
-// pages/HomePage.js
-
 class HomePage {
   static primaryHeaderText = '.app_logo';
   static shoppingCart = '.shopping_cart_link';
@@ -113,9 +111,6 @@ class HomePage {
       return false;
     }
   }
-
-  // New filter container methods
-
   static async isFilterContainerVisible(page) {
     return await page.isVisible(this.filterContainer);
   }
@@ -134,7 +129,6 @@ class HomePage {
 
   static async selectFilterOption(page, optionText) {
     await page.selectOption(this.filterContainer, { label: optionText });
-    // Wait a little to allow sorting to apply
     await page.waitForTimeout(500);
   }
 
